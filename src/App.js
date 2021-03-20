@@ -13,7 +13,6 @@ function App() {
       <Suspense fallback={<div>Loading ...</div>}>
         <BrowserRouter>
           <Header />
-
           <Switch>
             <Redirect exact from="/" to="/photos" />
 
