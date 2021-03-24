@@ -1,10 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import TodoForm from 'features/Todo/components/TodoForm';
+import React from 'react';
 
-ListPage.propTypes = {
-
-};
+ListPage.propTypes = {};
 
 function ListPage(props) {
 

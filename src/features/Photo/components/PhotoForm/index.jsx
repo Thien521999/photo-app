@@ -11,108 +11,117 @@ import * as Yup from 'yup';
 
 
 PhotoForm.propTypes = {
-  onSubmit: PropTypes.func,
-  initialValues: PropTypes.object,
+    onSubmit: PropTypes.func,
+    initialValues: PropTypes.object,
+    isAddode: PropTypes.string,
 };
 
 PhotoForm.defaultProps = {
-  onSubmit: null,
-  initialValues: {},
+    onSubmit: null,
+    initialValues: {},
+    isAddode: '',
 }
 
 function PhotoForm(props) {
-  //khi lam vs formik(lam vs cac control) thi phai nho khai bao cac control ko se bi loi
-  const {initialValues} = props;
+    //khi lam vs formik(lam vs cac control) thi phai nho khai bao cac control neu ko se bi loi
+    const { initialValues, isAddode } = props;
 
-  const validationSchema = Yup.object().shape({
-    title: Yup.string().required('This field is required.'),
+    // const initialValues =  {
+    //     title: '',
+    //     categoryId: null,
+    //     photo: '',
+    // }
 
-    categoryId: Yup.number().required('This field is required.').nullable(),
+    const validationSchema = Yup.object().shape({
+        title: Yup.string().required('This field is required.'),
 
-    //photo: Yup.string().required('This field is required.'),
+        categoryId: Yup.number().required('This field is required.').nullable(),
 
-    //vd:TH thang photo phu thuoc vào thang categoryId nếu như chon category thì mới cho pho required
-    photo: Yup.string().when('categoryId', {
-      is: 1,
-      then: Yup.string().required('This field is required.'),
-      otherwise: Yup.string().notRequired(),
-    }),
-  });
+        //photo: Yup.string().required('This field is required.'),
+        //vd:TH thang photo phu thuoc vào thang categoryId nếu như chon category thì mới cho pho required
+        photo: Yup.string().when('categoryId', {
+            is: 1,
+            then: Yup.string().required('This field is required.'),
+            otherwise: Yup.string().notRequired(),
+        }),
+    });
 
-  //const {onSubmit} = props;
+    //const {onSubmit} = props;
 
-  return (
-    <Formik
-      initialValues={initialValues}
-      validationSchema={validationSchema}
-      onSubmit={props.onSubmit}
-    >
-      {formitProps => {
-        //do some thing here ....
-        const { values, errors, touched, isSubmitting } = formitProps;
-        console.log({ values, errors, touched });
+    return (
+        <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={props.onSubmit}
+        // onSubmit = {value => console.log('Submit:', value)}
+        >
+            {formitProps => {
+                //do some thing here ....
+                const { values, errors, touched, isSubmitting } = formitProps;
+                console.log({ values, errors, touched });
 
-        return (
-          <Form>
-            <FastField
-              name="title"    //day la props cua FastField
-              component={InputField}  //day la props cua FastField
+                return (
+                    <Form>
+                        <FastField
+                            name="title"                //day la props cua FastField
+                            component={InputField}      //day la props cua FastField
 
-              label="Title"                    //day là props truyen vao InputField
-              placeholder="Eg: Wow nature ..." //day là props truyen vao InputField
-            />
+                            label="Title"                    //day là props truyen vao InputField
+                            placeholder="Eg: Wow nature ..." //day là props truyen vao InputField
+                        />
 
-            <FastField
-              name="categoryId"    //day la props cua FastField
-              component={SelectField}  //day la props cua FastField
+                        <FastField
+                            name="categoryId"                           //day la props cua FastField
+                            component={SelectField}                     //day la props cua FastField
 
-              label="Category"                    //day là props truyen vao InputField
-              placeholder="What's your photo category?" //day là props truyen vao InputField
-              options={PHOTO_CATEGORY_OPTIONS}
-            />
+                            label="Category"                            //day là props truyen vao SelectField
+                            placeholder="What's your photo category?"   //day là props truyen vao SelectField
+                            options={PHOTO_CATEGORY_OPTIONS}
+                        />
 
-            <FastField
-              name="photo"
-              component={RandomPhotoField}
-              label="Photo"
-            />
+                        <FastField
+                            name="photo"
+                            component={RandomPhotoField}
+                            label="Photo"
+                        />
 
-            {/* <FormGroup>
-              <Label for="titleId">Title</Label>
-              <Input name="title" id="titleId" placeholder="Eg: Wow nature ..." />
-            </FormGroup> */}
+                        {/* <FormGroup>
+                                <Label for="titleId">Title</Label>
+                                <Input name="title" id="titleId" placeholder="Eg: Wow nature ..." />
+                            </FormGroup> */}
 
-            {/* <FormGroup>
-              <Label for="categoryId">Category</Label>
-              <Select
-                id="categoryId"
-                name="categoryId"
+                        {/* <FormGroup>
+                                <Label for="categoryId">Category</Label>
+                                <Select
+                                    id="categoryId"
+                                    name="categoryId"
 
-                placeholder="What's your photo category?"
-                options={PHOTO_CATEGORY_OPTIONS}
-              />
-            </FormGroup> */}
+                                    placeholder="What's your photo category?"
+                                    options={PHOTO_CATEGORY_OPTIONS}
+                                />
+                            </FormGroup> */}
 
-            {/* <FormGroup>
-              <Label for="categoryId">Photo</Label>
+                        {/* <FormGroup>
+                                <Label for="categoryId">Photo</Label>
+                                <div>
+                                    <Button type="button" outline color="primary">Random a photo</Button>
+                                </div>
+                                <div>
+                                    <img width="200px" height="200px" src={Images.COLORFUL_BG} alt="colorful background" />
+                                </div>
+                            </FormGroup> */}
 
-              <div><Button type="button" outline color="primary">Random a photo</Button></div>
-              <div>
-                <img width="200px" height="200px" src={Images.COLORFUL_BG} alt="colorful background" />
-              </div>
-            </FormGroup> */}
-
-            <FormGroup>
-              <Button type="submit" color="primary">
-                {isSubmitting && <Spinner size="sm" />}
-                Add to album
-              </Button>
-            </FormGroup>
-          </Form>
-        )
-      }}
-    </Formik>
-  );
+                        <FormGroup>
+                            <Button type="submit" color={isAddode ? "primary" : "success"} >
+                                { isSubmitting && <Spinner size="sm" />}
+                                {isAddode ? 'Add to album' : 'Update photo'}
+                            </Button>
+                        </FormGroup>
+                    </Form>
+                )
+            }}
+        </Formik>
+    );
 }
 
 export default PhotoForm;

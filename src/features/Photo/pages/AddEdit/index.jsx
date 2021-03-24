@@ -11,8 +11,8 @@ AddEditPage.propTypes = {};
 function AddEditPage(props) {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { photoId } = useParams(); //rra ve 1 object
-  const isAddMode = !photoId; //dùng de kiem tra khi nào là add, khi nào edit
+  const { photoId } = useParams(); //trả ve object, log ra id trên URL(Làm viec voi path params)
+  const isAddMode = !photoId; //dùng de kiem tra khi nào là add, khi nào edit(Nếu là addMode thì o có PhotoId)
 
   const editedPhoto = useSelector(state => {
     const foundPhoto = state.photos.find(x => x.id === +photoId);
@@ -24,16 +24,17 @@ function AddEditPage(props) {
 
   const initialValues = isAddMode
     ?
-    {
-      title: "",
-      categoryId: null,
-      photo: "",
-    }
+      {
+        title: "",
+        categoryId: null,
+        photo: "",
+      }
     :
-    editedPhoto;
+      editedPhoto;
 
 
   const handleSubmit = (values) => {
+    //fake API(thuong thuong o day viet API)
     return new Promise(resolve => {
       console.log('Form submit: ', values);
 
@@ -49,11 +50,11 @@ function AddEditPage(props) {
           dispatch(action);
         }
 
+        //di chuyen ve trang chu(trang show list photo)
         history.push('/photos');
         resolve(true);
       }, 2000);
     })
-
   }
   return (
     <div className="photo-edit">
@@ -61,6 +62,7 @@ function AddEditPage(props) {
 
       <div className="photo-edit__form">
         <PhotoForm
+          isAddMode={isAddMode}
           onSubmit={handleSubmit}
           initialValues={initialValues}
         />

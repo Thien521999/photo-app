@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from "yup";
-// import InputField from '../../../../components/form-controls/InputField';
 
 TodoForm.propTypes = {
     onSubmit: PropTypes.func,
@@ -31,11 +30,11 @@ function TodoForm(props) {
     const handleSubmit = (values) => {
         //console.log('TODO FORM: ', values);
         const { onSubmit } = props;
-        if (onSubmit) {
-            onSubmit(values);
-        }
+        if (!onSubmit) return;
+        onSubmit(values);
 
-        form.reset(); // khi submit xong xoa gia tri trong ô input
+        // khi submit xong xoa gia tri trong ô input
+        form.reset();
     }
 
     return (
@@ -46,6 +45,5 @@ function TodoForm(props) {
         </form>
     );
 }
-
 
 export default TodoForm;

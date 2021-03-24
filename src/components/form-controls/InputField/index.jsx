@@ -19,10 +19,6 @@ function InputField(props) {
     const { errors } = form;
     const hasError = errors[name];
 
-    // const {errors, formState} = form;
-    // const hasError = formState.touched[name] && errors[name];
-    //console.log(errors[name], formState.touched[name]);
-
     return (
         //de de dang lam viec voi cac thu vien ben ngoai va tu dong binding cac ham nhu onchange, onblur, ....
         //thi su dung controller cua React-hook-form.
@@ -33,11 +29,11 @@ function InputField(props) {
             control={form.control} //bat buoc phai co(lay tu form.control)
             as={TextField} //ban muon su dung UI Libery nào.bat buoc phai co
 
-            margin="normal" //duoc truyen vao trong TextField luon
-            variant="outlined"//duoc truyen vao trong TextField luon
-            fullWidth //duoc truyen vao trong TextField luon
-            label={label} //duoc truyen vao trong TextField luon
-            disabled={disabled} //duoc truyen vao trong TextField luon
+            margin="normal"         //
+            variant="outlined"      //
+            fullWidth               //duoc truyen vao trong TextField luon
+            label={label}           //
+            disabled={disabled}     //
 
             //de show error
             error={!!hasError} //!phu dinh tra ve true false

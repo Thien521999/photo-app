@@ -73,8 +73,6 @@ function RegisterForm(props) {
         if (onSubmit) {
             await onSubmit(values);
         }
-
-        //form.reset(); // khi submit xong xoa gia tri trong ô input
     }
 
     const {isSubmitting} = form.formState;
@@ -95,6 +93,7 @@ function RegisterForm(props) {
                 <InputField name="email" label="Email" form={form} />
                 <PasswordField name="password" label="Password" form={form} />
                 <PasswordField name="retypePassword" label="Retype Password" form={form} />
+                
                 {/* Trong luc submit thì  disable cái nút đi. */}
                 <Button
                     disabled={isSubmitting}
